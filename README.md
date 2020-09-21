@@ -10,7 +10,7 @@ Execute script
 ./web-tool-docker.sh
 ```
 
-##Clean all containers
+## Clean all containers
 ```
 ./cleanup-containers.sh
 ```
