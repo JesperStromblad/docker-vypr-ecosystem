@@ -1,0 +1,29 @@
+# This is a docker-compose file.
+# Maintained by Omar Javed
+
+#Version tag
+version: "3"
+
+
+# We use the keyword 'services' to start to create services.
+services:
+
+
+ # VyPR Server
+  verdict:
+        build: 
+          context: server/
+        command: python run_service.py --port 9003 --db verdicts.db --events-db events.db --path ../test-project/ 
+        ports:
+          - 9003:9003
+
+
+  client:
+        build:
+          context: client/
+        depends_on:
+          - verdict
+        command: python launch.py --port 9001 --instrumentation-stream http://localhost:9003/event_stream/instrumentation/ --monitoring-stream  http://localhost:9003/event_stream/monitoring/
+ #       network_mode: host
+        ports:
+          - 9001:9001
