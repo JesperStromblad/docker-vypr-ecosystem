@@ -1,4 +1,4 @@
-#Containerization setup for VyPR visualization web tool
+# Containerization setup for VyPR visualization web tool
 
 ## Prerequisite
 All scripts provided in the repository should have execute permission
