@@ -11,6 +11,7 @@ docker build -f Dockerfile_vypr -t vypr .
 # We run it in detached mode
 docker run -d -p 9002:9002 vypr
 
+
 # We build docker-compose services for Visualisation
 docker-compose build
 docker-compose up -d
@@ -27,3 +28,7 @@ printf "\033[0;31m Container Services for visualization completed. \033[0m \n"
 printf "\033[0;31m Use http://localhost:9001/ on your browser for Visualization environment \033[0m \n"
 
 
+
+
+docker build -q -f Dockerfile_jupyter -t vyprjupyter .
+docker run -p 9005:9005 vyprjupyter

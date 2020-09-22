@@ -1,0 +1,64 @@
+# Docker file for creating a container for RV tutorial 2020
+# This docker file only handles Analysis Environment Demonstration
+
+# Date of creation - 18.09.2020
+# Maintainer -  omjaved
+
+# OS package, without tag means we will always take the latest os image
+FROM python:2.7
+
+EXPOSE 9005
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+curl python-pip
+
+# Installing and setting up virtual environment
+RUN pip install virtualenv jupyter matplotlib flask requests
+RUN virtualenv venv --python=python2.7
+
+RUN git clone https://github.com/martahan/OfflineAnalysisNotebooks.git
+
+# Current working directory to store repositories
+WORKDIR OfflineAnalysisNotebooks
+
+# Source virtual directory
+CMD source venv/bin/activate
+
+# Clone necessary repositories
+RUN git clone https://github.com/pyvypr/VyPRServer.git
+
+# Cloning specific commit
+WORKDIR VyPRServer/
+RUN git checkout 6a12c9c3710cab2ff4832dd9d85d723f8b1e25a4
+
+RUN pip install -r requirements.txt
+
+WORKDIR ../
+
+
+RUN git clone https://github.com/pyvypr/VyPRAnalysis.git
+
+WORKDIR VyPRAnalysis
+RUN git checkout 887fa1afdb946524921b6d674eb5f1151a705db6
+WORKDIR ../
+
+
+RUN git clone https://github.com/pyvypr/VyPR.git
+
+WORKDIR VyPR
+RUN git checkout 4f6461adfe14ca5ffcebcf5237122c781ed067e1
+WORKDIR ../
+
+
+WORKDIR VyPRServer
+
+RUN git clone https://github.com/pyvypr/VyPR.git
+RUN curl -L http://cern.ch/vypr/data/verdicts-hash-checking-analysis.db -O
+
+WORKDIR ../
+
+
+RUN mv verdicts.db VyPRServer/verdicts.db
+
+CMD ["jupyter", "notebook","--port=9005", "--ip=0.0.0.0", "--allow-root"]
