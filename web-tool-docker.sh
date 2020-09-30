@@ -6,15 +6,28 @@
 printf "\033[0;31m Building and running container for analysis environment \033[0m \n"
 
 # We first build Analysis environment
-docker build -f Dockerfile_vypr -t vypr .
+#docker build -f Dockerfile_vypr -t vypr .
+#
+## We run it in detached mode
+#docker run -d -p 9005:9005 vypr
 
-# We run it in detached mode
-docker run -d -p 9002:9002 vypr
+
+# Visualisation tool works by first setting up verdict server in docker container and visualization tool runs on host machine
+
+# Synchronizing container with the host's timezone
+TZ=`date | cut -d' ' -f5`
+
+if [ $TZ == 'CEST' ] ; then 
+     TZ='CET'
+fi
+echo $TZ
+
+docker build -f server/Dockerfile -t verdict .
+docker run -d -p 9003:9003 -e TZ=$TZ verdict
 
 
-# We build docker-compose services for Visualisation
-docker-compose build
-docker-compose up -d
+bash ./client-script.sh
+
 
 
 
