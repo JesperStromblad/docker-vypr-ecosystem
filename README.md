@@ -1,10 +1,10 @@
 # Containerization setup for VyPR eco system
 
 ## Prerequisite
-All scripts provided in this repository should have execute permission
-Docker engine and its components should be installed. 
-Please check the script ./install_docker.sh
-In order to run the containerized version of VyPR ecosystem, there are four port numbers which are exposed such as 9001, 9002, 9003, 9005. Please remove any service running on the following port numbers
+- All scripts provided in this repository should have execute permission.
+- Docker engine and its components should be installed. 
+- Please check the script `./install_docker.sh` if you need to install Docker engine and its componenet automatically.
+- In order to run the containerized version of VyPR ecosystem, there are four port numbers which are exposed such as 9001, 9002, 9003, 9005. Please remove any service running on the following port numbers
 
 
 ## Containerization details
