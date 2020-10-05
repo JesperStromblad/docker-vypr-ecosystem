@@ -26,6 +26,10 @@ git clone https://github.com/pyvypr/VyPRLocal-py2.git VyPR
 # cd into test-project, run instrumentation then run the program under monitoring
 python VyPR/instrument.py
 python main.py
+sleep 2
+verdict=`docker ps | grep 'verdict' | awk '{ print $1 }'`
+echo $verdict
+docker cp $original_pwd/VyPR-visualisation/test-project/module.py.inst $verdict:/VyPR-visualisation/test-project/
 
 cd ..
 
