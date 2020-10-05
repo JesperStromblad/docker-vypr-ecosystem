@@ -48,7 +48,7 @@ RUN mkdir monitored-service
 RUN mkdir monitored-service/app
 
 RUN curl -L http://cern.ch/vypr/data/uploader/app/metadata_handler.py.inst -o monitored-service/app/metadata_handler.py.inst
-
+RUN curl -L http://cern.ch/vypr/data/uploader/app/routes.py.inst -o monitored-service/app/routes.py.inst
 
 CMD python run_service.py --port 9002 --db verdicts-metadata-check-analysis.db --path monitored-service/
 
