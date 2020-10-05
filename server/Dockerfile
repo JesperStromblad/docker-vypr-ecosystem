@@ -9,14 +9,8 @@ FROM python:2.7
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-curl python-pip sqlite3
+curl python-pip sqlite3 tmux
 
-
-RUN pip install virtualenv
-RUN virtualenv venv --python=python2.7
-
-# Source virtual environment
-CMD source venv/bin/activate
 
 # Current working directory to store repositories
 
@@ -54,7 +48,6 @@ RUN git clone https://github.com/pyvypr/VyPR.git
 WORKDIR VyPR/
 
 
-
 # Setting the directory to test project
 WORKDIR ../../test-project/
 
@@ -65,20 +58,10 @@ RUN git clone https://github.com/pyvypr/VyPRLocal-py2.git VyPR
 
 WORKDIR ../VyPRServer/
 
-
-CMD python run_service.py --port 9001 --db verdicts.db --events-db events.db --path ../test-project/
-
+CMD python run_service.py --port 9003 --db verdicts.db --events-db events.db --path ../test-project/
 
 
-#FROM base AS client
 
-#WORKDIR ../test-project/
 
-#RUN ls -l
 
-#RUN python VyPR/instrument.py
-
-#RUN python main.py
-
-#WORKDIR VyPR-visualisation/
 
