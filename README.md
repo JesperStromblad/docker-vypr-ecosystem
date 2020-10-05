@@ -3,7 +3,7 @@
 ## Pre-requisites
 - All scripts provided in this repository should have execute permission.
 - Docker engine and its components should be installed. Please check the script `./install_docker.sh` if you need to install Docker engine and its components automatically.
-- In order to run the containerized version of VyPR ecosystem, there are four port numbers which are exposed such as 9001, 9002, 9003, 9005. Please remove any service running on the following port numbers.
+- In order to run the containerized version of VyPR ecosystem, there are four port numbers which are exposed such as 9001, 9002, 9003, 9005. Please remove any service running on the aforementioned port numbers.
 
 
 ## Containerization details
@@ -22,7 +22,7 @@ A Javascript-based visualisation tool for the VyPR performance analysis framewor
 
 To get a feel of how analysis library is used. We provide two notebooks for running the analysis and visualizing the data collected from VyPR performance analysis
 
-This is accessed at `http://localhost:9005/?token=...`. Token number can be accessed after container is deployed
+This is accessed at `http://localhost:9005/?token=...`. Token number can be accessed after container is deployed. See the output on the terminal.
 
 
 
