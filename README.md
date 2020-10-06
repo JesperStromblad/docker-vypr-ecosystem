@@ -27,9 +27,9 @@ This is accessed at `http://localhost:9005/?token=...`. Token number can be acce
 
 
 ## Start containerization setup
-Execute script
+Execute the following script. This will build and run containers for the eco system.
 ```
-./web-tool-docker.sh
+./run-vypr-ecosystem.sh
 ```
 After the containerization process is completed, there will be a message providing some instructions about how to access VyPR ecosystem.
 
