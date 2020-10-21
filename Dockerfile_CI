@@ -1,0 +1,68 @@
+# Docker file for creating a container for RV tutorial 2020
+# This docker file only handles Analysis Environment Demonstration
+
+# Date of creation - 18.09.2020
+# Maintainer -  omjaved
+
+# OS package, without tag means we will always take the latest os image
+FROM python:2.7
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+curl python-pip virtualenv git curl
+
+# Installing and setting up virtual environment
+RUN pip install virtualenv
+RUN virtualenv venv --python=python2.7
+
+# Clone git repo
+RUN git clone https://package4conf:abcd1234@gitlab.com/package4conf/sample-perfci.git
+
+# Making the sample directory as main PERFCI
+WORKDIR sample-perfci/
+
+# Clone perfci tool
+RUN git clone https://gitlab.cern.ch/omjaved/perfci
+
+# Navigate to PerfCI
+WORKDIR perfci/
+
+#
+RUN git checkout 2fde7f25d7915af73efe705683e4c4658e099e87
+
+RUN pip install -r requirements.txt
+
+
+WORKDIR ../
+
+RUN   mkdir perfdata 
+RUN   cp /sample-perfci/perfci/sample/perfdata/* perfdata
+COPY ./sample/.perf-ci.yml  .
+
+COPY ./sample/perfdata/VyPR_queries.py /sample-perfci/perfci 
+
+COPY ./sample/.gitlab-ci.yml .
+
+WORKDIR perfci/
+RUN python ymlparser.py
+
+WORKDIR ../
+
+RUN git config --global user.name 'package4conf'
+RUN git config --global user.email 'omarjaved83@outlook.com'
+
+RUN git pull
+
+RUN git add perfdata/* .gitlab-ci.yml
+
+RUN git commit -m 'running performance testing'
+
+RUN git push
+
+RUN git rm -rf perfdata
+
+RUN git rm .gitlab-ci.yml
+
+RUN git commit -m 'cleanup'
+
+RUN git push

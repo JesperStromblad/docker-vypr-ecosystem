@@ -1,0 +1,46 @@
+# OS package, without tag means we will always take the latest os image
+FROM python:2.7
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+curl python-pip virtualenv git curl
+
+# Installing and setting up virtual environment
+RUN pip install virtualenv
+RUN virtualenv venv --python=python2.7
+RUN pip install requests flask dateparser
+
+WORKDIR analysis
+
+COPY unit_test_analysis.py .
+RUN mkdir data
+
+# Delay for getting the data
+RUN sleep 240
+
+# Download verdict database from gitlab artifact
+RUN curl -L -O "https://gitlab.com/package4conf/sample-perfci/-/jobs/artifacts/master/raw/perfdata/verdicts.db?job=performance_testing"
+RUN mv verdicts.db?job=performance_testing data/verdicts.db
+
+# Download VyPR Analysis library and its dependencies
+RUN git clone https://github.com/pyvypr/VyPR.git
+WORKDIR VyPR
+RUN git checkout 4f6461adfe14ca5ffcebcf5237122c781ed067e1
+WORKDIR ../
+
+RUN git clone https://github.com/pyvypr/VyPRServer.git
+RUN cp -rf VyPR VyPRServer
+
+WORKDIR VyPRServer
+RUN git checkout 8ef27c2db0ff234800c520e8741ca931dbfdf3a8
+
+WORKDIR ../
+
+RUN git clone https://github.com/pyvypr/VyPRAnalysis.git
+WORKDIR VyPRAnalysis
+RUN git checkout ad6c4e043772d35cda6bd8e641bd5f43ac5e2dba
+WORKDIR ../
+
+
+# Run our analysis script
+CMD python unit_test_analysis.py
