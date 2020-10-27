@@ -14,13 +14,8 @@ docker run -d -p 9002:9002 vypr
 # Building the CI example container 
 docker build -f Dockerfile_CI -t ci .
 
-
 # We run it in the detached mode
 docker run -d -p ci
-
-# Building the fetch data service. This service waits for data to be available to it takes time to build and run
-#docker build -f Dockerfile_Get_CI_Data -t data .
-#docker run -d -p data
 
 # Visualisation tool works by first setting up verdict server in docker container and visualization tool runs on host machine
 

@@ -26,11 +26,13 @@ WORKDIR OfflineAnalysisNotebooks
 CMD source venv/bin/activate
 
 # Clone necessary repositories
-RUN git clone https://github.com/pyvypr/VyPRServer.git
+#RUN git clone https://github.com/pyvypr/VyPRServer.git
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPRServer.git
+
 
 # Cloning specific commit
 WORKDIR VyPRServer/
-RUN git checkout 6a12c9c3710cab2ff4832dd9d85d723f8b1e25a4
+#RUN git checkout 6a12c9c3710cab2ff4832dd9d85d723f8b1e25a4
 
 RUN pip install -r requirements.txt
 
@@ -44,16 +46,19 @@ RUN git checkout 887fa1afdb946524921b6d674eb5f1151a705db6
 WORKDIR ../
 
 
-RUN git clone https://github.com/pyvypr/VyPR.git
+#RUN git clone https://github.com/pyvypr/VyPR.git
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPR.git
 
-WORKDIR VyPR
-RUN git checkout 4f6461adfe14ca5ffcebcf5237122c781ed067e1
-WORKDIR ../
+
+#WORKDIR VyPR
+#RUN git checkout 4f6461adfe14ca5ffcebcf5237122c781ed067e1
+#WORKDIR ../
 
 
 WORKDIR VyPRServer
 
-RUN git clone https://github.com/pyvypr/VyPR.git
+#RUN git clone https://github.com/pyvypr/VyPR.git
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPR.git 
 RUN curl -L http://cern.ch/vypr/data/verdicts-hash-checking-analysis.db -O
 
 WORKDIR ../

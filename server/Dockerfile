@@ -25,7 +25,9 @@ RUN git checkout 318e9ec21776fafb9c3616e72ce4465e99911c14
 
 RUN pip install -r requirements.txt
 
-RUN git clone https://github.com/pyvypr/VyPRServer.git
+#RUN git clone https://github.com/pyvypr/VyPRServer.git
+
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPRServer.git
 
 # Cloning Verdict server
 
@@ -43,7 +45,9 @@ RUN pip install -r requirements.txt
 
 # Cloning VyPR core
 
-RUN git clone https://github.com/pyvypr/VyPR.git
+#RUN git clone https://github.com/pyvypr/VyPR.git
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPR.git
+
 
 WORKDIR VyPR/
 

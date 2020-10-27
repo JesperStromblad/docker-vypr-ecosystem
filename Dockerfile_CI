@@ -22,13 +22,14 @@ RUN git clone https://package4conf:abcd1234@gitlab.com/package4conf/sample-perfc
 WORKDIR sample-perfci/
 
 # Clone perfci tool
-RUN git clone https://gitlab.cern.ch/omjaved/perfci
+#RUN git clone https://gitlab.cern.ch/omjaved/perfci
+RUN git clone --single-branch --branch sync https://gitlab.cern.ch/omjaved/perfci
 
 # Navigate to PerfCI
 WORKDIR perfci/
 
 #
-RUN git checkout 2fde7f25d7915af73efe705683e4c4658e099e87
+#RUN git checkout 2fde7f25d7915af73efe705683e4c4658e099e87
 
 RUN pip install -r requirements.txt
 

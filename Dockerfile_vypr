@@ -23,22 +23,24 @@ WORKDIR tutorial/
 CMD source venv/bin/activate
 
 # Clone verdict server
-RUN git clone https://github.com/pyvypr/VyPRServer.git
-
+#RUN git clone https://github.com/pyvypr/VyPRServer.git
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPRServer.git
 
 # Cloning specific commit
-WORKDIR VyPRServer/
-RUN git checkout 6a12c9c3710cab2ff4832dd9d85d723f8b1e25a4
+#WORKDIR VyPRServer/
+#RUN git checkout 6a12c9c3710cab2ff4832dd9d85d723f8b1e25a4
 
-#WORKDIR /tutorial/VyPRServer/
+WORKDIR /tutorial/VyPRServer/
 
 RUN pip install -r requirements.txt
 
-RUN git clone https://github.com/pyvypr/VyPR.git
+#RUN git clone https://github.com/pyvypr/VyPR.git
 
-WORKDIR VyPR/
+#WORKDIR VyPR/
 
-RUN git checkout 4f6461adfe14ca5ffcebcf5237122c781ed067e1
+#RUN git checkout 4f6461adfe14ca5ffcebcf5237122c781ed067e1
+
+RUN git clone --single-branch --branch sync https://github.com/JesperStromblad/VyPR.git
 
 WORKDIR /tutorial/VyPRServer/
 
